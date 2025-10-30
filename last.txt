@@ -1,0 +1,56 @@
+const express = require("express");
+const app = express();
+const helmet = require("helmet");
+const port = 2000;
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+var MongoClient = require('mongodb').MongoClient;
+const url = "mongodb+srv://family:aS0507499583@cluster0.dvljyns.mongodb.net/?retryWrites=true&w=majority"
+app.use(express.static("public"));
+app.use(helmet());
+
+
+
+app.get('/', (req, res) => {
+  res.sendFile('public/user.html', { root: '.' })
+})
+app.get('/aa', (req, res) => {
+  res.sendFile('public/admin.html', { root: '.' })
+})
+io.on('connection', (socket) => {
+  socket.on('save', (x1) => {
+    // console.log(x1);
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      var dbo = db.db("newData");
+      dbo.collection("aaa").updateOne(
+        { name: 'all' },
+        {
+          $set: { 'data': x1 }
+        }, function (err, res) {
+          if (err) throw err;
+          socket.emit("done")
+          // console.log("1 document updated");
+          // db.close();
+        });
+    });
+  })
+
+  socket.on('lode', () => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      var dbo = db.db("newData");
+       dbo.collection("aaa").findOne({}).then(x => {reso = x
+        socket.emit('data', x.data)
+      }).catch(err => {
+        console.log(err)
+      })
+      // socket.emit('data', reso)
+    });
+  })
+
+})
+
+server.listen(process.env.PORT || port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})

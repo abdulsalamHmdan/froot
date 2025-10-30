@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.parent {
+    min-height: calc(100vh/3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding-bottom: 15px; */
+    flex-wrap: wrap;
+    /* background-color: brown; */
+    border:  solid #000;
+    border-width: 0 0 1px 0;
+}
+body{
+    background-color: #297373;
+}
+.person {
+    position: relative;
+    min-width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 5;
+    font-size: 30px;
+    animation: x .4s;
+    /* background-color: #0274d1; */
+    background-color: #e9d758;
+    box-shadow: black 0px 0px 12px 3px;
+    
+}
+
+.father {
+    cursor: pointer;
+    transition: all .5s;
+    border: 2px solid #e6e6e6;
+}
+
+.die {
+    background-color: #ff8552;
+    background-size: 130px 130px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.selected {
+    /* border: 2px solid rgb(255 255 255); */
+    /* background-color: #d30000; */
+    box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+    transform: scale(0.8);
+    transition: all .5s;
+}
+.selected::before {
+    content: "";
+    border: 32px solid;
+    border-color: #000 transparent transparent transparent;
+    position: absolute;
+    top: -35px;
+    left: 41px;
+}
+
+.parent:first-child {
+    min-height: initial;
+    justify-content: flex-end;
+    align-items: center;
+    border: 0px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #297373;
+}
+
+.parent:first-child button {
+    position: absolute;
+    left: 2px;
+    width: 50px;
+    height: 32px;
+}
+
+.parent:first-child button div {
+
+    width: 24px;
+    height: 24px;
+    margin: 2px 0 0 12px;
+    border: 2px solid;
+    border-color: blue rgba(68, 68, 180, 0.76);
+    border-radius: 50%;
+    animation: rotat infinite 1s linear;
+}
+
+.dis {
+    pointer-events: none;
+    background-color: #aaa;
+}
+
+.parent:first-child .person {
+    min-width: 40px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 3;
+    cursor: initial;
+    color: white;
+    border-width: 2px;
+}
+
+.toAdd {
+    background: #000;
+    color: #fff;
+    font-size: 120px;
+    line-height: 1.2;
+}
+
+.form {
+    width: 254px;
+    position: fixed;
+    height: 160px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    top: calc(50% - 80px);
+    border: #000 1px solid;
+    box-shadow: 0 0 20px 7px;
+    direction: rtl;
+    text-align: center;
+    z-index: 999;
+}
+
+/* .form button{
+
+} */
+.form>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form>div>*:last-child {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.qlo {
+    font-size: 20px;
+    line-height: .7;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: red;
+    height: 20px;
+    width: 20px;
+    border-radius: 2px;
+    border: #fff 1px solid;
+    color: #fff;
+    transition: all 1s;
+    opacity: 0;
+}
+
+.person:hover .qlo {
+    opacity: 1;
+}
+
+.change {
+    font-size: 20px;
+    line-height: .7;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: red;
+    height: 20px;
+    width: 20px;
+    border-radius: 2px;
+    border: #fff 1px solid;
+    color: #fff;
+    transition: all 1s;
+    opacity: 0;
+}
+
+.person:hover .change {
+    opacity: 1;
+}
+
+@keyframes rotat {
+
+    /* 0% {
+        transform:rotate(0);
+    } */
+    to {
+        transform: rotate(360deg);
+
+    }
+}
+
+@keyframes x {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+
+    }
+}
