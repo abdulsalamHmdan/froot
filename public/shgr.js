@@ -7,7 +7,7 @@ function addSons(sons) {
         var person = document.createElement("div")
         person.classList = `person ${x.stat == 2 ? "die" : ""}`;
         person.innerText = x["name"];
-        console.log(x["root"].length,"---",x.stat)
+        // console.log(x["root"].length,"---",x.stat)
         if (x["root"].length) {
             person.classList += " father"
             person.addEventListener("click", (e) => {
@@ -32,15 +32,13 @@ function addSons(sons) {
 
 $.ajax({
     method: "get",
-    url: "load",
+    url: "/load",
     error: function () {
       console.log("done")
     },
     success: function (x) {
-        // console.log(x)
-        // console.log(JSON.parse(x))
     family = x;
-    // family = JSON.parse(x);
+    document.getElementById("loading").remove();
     addSons(family["root"]);
 }
 })

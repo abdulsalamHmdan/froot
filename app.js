@@ -24,6 +24,10 @@ liveReloadServer.server.once("connection", () => {
 
 
 
+app.get('/', (req, res) => {
+  res.sendFile('public/user.html', { root: '.' })
+})
+
 app.get('/:family/user', (req, res) => {
   res.sendFile('public/user.html', { root: '.' })
 })
@@ -39,7 +43,7 @@ app.post('/:family/save', (req, res) => {
     if (err) throw err;
     var dbo = db.db("newData");
     dbo.collection("aaa").updateOne(
-      { name:req.params.family },
+      { name: req.params.family },
       {
         $set: { 'data': JSON.parse(req.body.data) }
       }, function (err, res) {
@@ -54,12 +58,24 @@ app.post('/:family/save', (req, res) => {
 })
 
 
+app.get('/load', (req, res) => {
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("newData");
+    dbo.collection("aaa").findOne({ name: "الحمدان" }).then(x => {
+      res.json(x.data)
+    }).catch(err => {
+      console.log(err)
+    })
+
+  });
+})
 app.get('/:family/load', (req, res) => {
 
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("newData");
-    dbo.collection("aaa").findOne({ name: req.params.family}).then(x => {
+    dbo.collection("aaa").findOne({ name: req.params.family }).then(x => {
       res.json(x.data)
       // socket.emit('data', x.data)
     }).catch(err => {
